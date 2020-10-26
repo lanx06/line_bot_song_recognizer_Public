@@ -138,9 +138,11 @@ def handle_message(event):
         output=""
         for x in data:
             output+=x["name"]+"\n"
-        line_bot_api.reply_message(event.reply_token,out)
+        line_bot_api.reply_message(event.reply_token,output)
+        print("ok")
     else:
         line_bot_api.reply_message(event.reply_token,"A")
+        print("ok")
 
 
 import os
