@@ -133,16 +133,19 @@ def callback():
 def handle_message(event):
     message = TextSendMessage(text=event.message.text)
     data=get_yahoo()
+    """
     if message == "all":
-        line_bot_api.reply_message(event.reply_token, TextSendMessage("run...."))
+        line_bot_api.reply_message(event.reply_token, TextSendMessage(text="run...."))
         output=""
         for x in data:
             output+=x["name"]+"\n"
-        line_bot_api.reply_message(event.reply_token,TextSendMessage(output))
+        line_bot_api.reply_message(event.reply_token,TextSendMessage(text=output))
         print("ok")
     else:
-        line_bot_api.reply_message(event.reply_token,TextSendMessage("A"))
         print("ok")
+    """
+    line_bot_api.reply_message(event.reply_token,TextSendMessage(text="A"))
+
 
 
 import os
