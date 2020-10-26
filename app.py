@@ -1,5 +1,8 @@
 from flask import Flask, request, abort
-
+import requests
+import json
+from bs4 import BeautifulSoup
+from PIL import Image,ImageTk
 from linebot import (
     LineBotApi, WebhookHandler
 )
@@ -15,6 +18,102 @@ line_bot_api = LineBotApi('zC0rCziecO5W7oWBn+i+zjfK4baDrVaWRGHCHrbQ2lvZUsPkDuevO
 # Channel Secret
 handler = WebhookHandler('e249894d19ef1c6763c99fdf6bffbf6b')
 
+def get_yahoo:
+
+    get_data=[]
+    url = "https://movies.yahoo.com.tw/movie_thisweek.html?page=1"
+    r = requests.get(url)
+    r.encoding="utf-8"
+    html=BeautifulSoup(r.text,"html.parser")
+    #data=json.loads(r.text)
+
+    image_url_arr=[]
+    items =html.find_all("div","release_info")
+    image_arr=html.find_all("div","release_foto")
+    #print(items)
+    x=0
+
+    for it in items:
+        image_it=image_arr[x]
+        name=it.find("div","release_movie_name").a.text.strip()
+        en=it.find("div","en").a.text.strip()
+        time=it.find("div","release_movie_time").text.strip()
+        text=it.find("div","release_text").span.text.strip()
+        image=image_it.find("img")["src"]
+        image_url_arr.append(image)
+        image_request = requests.get(image)
+        f = open("./"+str(x)+'.png','wb')
+        
+        f.write(image_request.content)
+        f.close()
+        pass
+
+        #print(image)
+        hap="期待度:"+it.find("div","leveltext").span.text.strip()
+        data={
+        "name":name,
+        "en":en,
+        "time":time,
+        "image":"./"+str(x)+'.png',
+        "text":text,
+        "hope":hap
+
+        }
+        get_data.append(data)
+
+        """
+        print(x+1)
+        print(name,en,"\t"+hap)
+        print(text)
+        print("\n")
+        """
+        x=x+1
+
+    url = "https://movies.yahoo.com.tw/movie_thisweek.html?page=2"
+    r = requests.get(url)
+    r.encoding="utf-8"
+    html=BeautifulSoup(r.text,"html.parser")
+    items =html.find_all("div","release_info")
+    image_arr=html.find_all("div","release_foto")
+
+
+    for it in items:
+
+        image_it=image_arr[x-10]
+        name=it.find("div","release_movie_name").a.text.strip()
+        en=it.find("div","en").a.text.strip()
+        time=it.find("div","release_movie_time").text.strip()
+        text=it.find("div","release_text").span.text.strip()
+        image=image_it.find("img")["src"]
+        image_url_arr.append(image)
+        image_request = requests.get(image)
+        f = open("./"+str(x)+'.png','wb')
+
+        f.write(image_request.content)
+        f.close()
+        #print(image)
+        hap="期待度"+it.find("div","leveltext").span.text.strip()
+
+        data={
+        "name":name,
+        "en":en,
+        "time":time,
+        "image":"./"+str(x)+'.png',
+        "text":text,
+        "hope":hap
+
+        }
+        get_data.append(data)
+        """
+        print(x+1)
+        print(name,en,"\t"+hap)
+        print(text)
+        print("\n")
+        """
+        x=x+1
+        pass
+
+    return get_data
 # 監聽所有來自 /callback 的 Post Request
 @app.route("/callback", methods=['POST'])
 def callback():
@@ -34,7 +133,16 @@ def callback():
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     message = TextSendMessage(text=event.message.text)
-    line_bot_api.reply_message(event.reply_token, message)
+    data=get_yahoo()
+    if message == "all":
+        line_bot_api.reply_message(event.reply_token, "run....")
+        output=""
+        for x in data:
+            output+=x["name"]+"\n"
+        line_bot_api.reply_message(event.reply_token,out)
+    if else:
+        line_bot_api.reply_message(event.reply_token,"A")
+
 
 import os
 if __name__ == "__main__":

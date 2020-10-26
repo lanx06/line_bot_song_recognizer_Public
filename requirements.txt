@@ -1,2 +1,6 @@
 line-bot-sdk
 flask
+json
+bs4
+PIL
+requests
