@@ -123,7 +123,7 @@ def handle_message(event):
     output=""
 
     
-    if message == "all":
+    if event.message.text == "all":
         output=""
         for x in data:
             output+=x["name"]+"\n"
