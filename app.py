@@ -17,7 +17,7 @@ line_bot_api = LineBotApi('zC0rCziecO5W7oWBn+i+zjfK4baDrVaWRGHCHrbQ2lvZUsPkDuevO
 # Channel Secret
 handler = WebhookHandler('e249894d19ef1c6763c99fdf6bffbf6b')
 
-def get_yahoo:
+def get_yahoo():
 
     get_data=[]
     url = "https://movies.yahoo.com.tw/movie_thisweek.html?page=1"
@@ -139,7 +139,7 @@ def handle_message(event):
         for x in data:
             output+=x["name"]+"\n"
         line_bot_api.reply_message(event.reply_token,out)
-    if else:
+    else:
         line_bot_api.reply_message(event.reply_token,"A")
 
 
