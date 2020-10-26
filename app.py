@@ -1,7 +1,6 @@
 from flask import Flask, request, abort
 import requests
 from bs4 import BeautifulSoup
-from PIL import Image,ImageTk
 from linebot import (
     LineBotApi, WebhookHandler
 )
@@ -60,12 +59,6 @@ def get_yahoo():
         }
         get_data.append(data)
 
-        """
-        print(x+1)
-        print(name,en,"\t"+hap)
-        print(text)
-        print("\n")
-        """
         x=x+1
 
     url = "https://movies.yahoo.com.tw/movie_thisweek.html?page=2"
@@ -103,12 +96,6 @@ def get_yahoo():
 
         }
         get_data.append(data)
-        """
-        print(x+1)
-        print(name,en,"\t"+hap)
-        print(text)
-        print("\n")
-        """
         x=x+1
         pass
 
