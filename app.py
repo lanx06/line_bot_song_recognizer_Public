@@ -119,6 +119,9 @@ def callback():
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     message = TextSendMessage(text=event.message.text)
+    print(event.message.type)
+    print(event.message.id)
+
     data=get_yahoo()
     output=""
 
