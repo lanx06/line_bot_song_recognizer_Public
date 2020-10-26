@@ -134,14 +134,14 @@ def handle_message(event):
     message = TextSendMessage(text=event.message.text)
     data=get_yahoo()
     if message == "all":
-        line_bot_api.reply_message(event.reply_token, "run....")
+        line_bot_api.reply_message(event.reply_token, TextSendMessage("run...."))
         output=""
         for x in data:
             output+=x["name"]+"\n"
-        line_bot_api.reply_message(event.reply_token,output)
+        line_bot_api.reply_message(event.reply_token,TextSendMessage(output))
         print("ok")
     else:
-        line_bot_api.reply_message(event.reply_token,"A")
+        line_bot_api.reply_message(event.reply_token,TextSendMessage("A"))
         print("ok")
 
 
