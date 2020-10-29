@@ -102,7 +102,6 @@ def get_yahoo():
 
     return get_data
 # 監聽所有來自 /callback 的 Post Request
-last_code=""
 
 
 @app.route("/callback", methods=['POST'])
@@ -118,11 +117,17 @@ def callback():
     except InvalidSignatureError:
         abort(400)
     return 'OK'
+last_code=""
+def save(indata):
+    global last_code
+    last_code=indata
+
 
 # 處理訊息
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     #message = TextSendMessage(text=event.message.text)
+    global last_code
     input_type=event.message.type
     message_id=event.message.id
     input_text=event.message.text
@@ -158,6 +163,7 @@ def handle_message(event):
         output="A"
         print("ok")
     last_code=event
+    line_bot_api.reply_message(event.reply_token,TextSendMessage(text=input_type))
     line_bot_api.reply_message(event.reply_token,TextSendMessage(text=output))
     
 
