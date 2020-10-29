@@ -125,7 +125,7 @@ def save(indata):
 
 
 # 處理訊息
-@handler.add(MessageEvent, message=Message)
+@handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     #message = TextSendMessage(text=event.message.text)
     global last_code
@@ -146,16 +146,6 @@ def handle_message(event):
             output+=x["name"]+"\n"
         print("ok")
 
-    elif input_type == "file" or input_type == "audio" or input_text=="data" :
-        print("file")
-        message_content = line_bot_api.get_message_content(message_id)
-        with open("input_file.mp3", 'wb') as fd:
-            for chunk in message_content.iter_content():
-                fd.write(chunk)
-                pass
-            pass
-        pass
-
     elif event.message.text=="old":
         output+="https://linex06lan.herokuapp.com/log"
         output+="\n"
@@ -171,7 +161,24 @@ def handle_message(event):
     last_code=event
     line_bot_api.reply_message(event.reply_token,TextSendMessage(text=output))
     
-@handler.add(MessageEvent, message=TextMessage)
+@handler.add(MessageEvent, message=AudioMessage)
+def voice(event):
+    output=""
+    output+=event.message.id
+    output+=event.message.type
+    print("file")
+    
+    input_type == "file" or input_type == "audio" or input_text=="data" :
+        print("file")
+        message_content = line_bot_api.get_message_content(message_id)
+        with open("input_file.mp3", 'wb') as fd:
+            for chunk in message_content.iter_content():
+                fd.write(chunk)
+                pass
+            pass
+        pass
+    line_bot_api.reply_message(event.reply_token,TextSendMessage(text=output))
+
 
 
 
