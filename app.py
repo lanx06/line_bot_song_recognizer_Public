@@ -8,6 +8,7 @@ from linebot.exceptions import (
     InvalidSignatureError
 )
 from linebot.models import *
+import json
 
 app = Flask(__name__)
 
@@ -137,6 +138,7 @@ def handle_message(event):
     output+="\n"
     output+=input_type
     output+="\n"
+    print(event.message)
 
     if input_text == "all" or input_text=="All":
         output=""
@@ -159,7 +161,7 @@ def handle_message(event):
         output+="\n"
         pass
     elif event.message.text=="indata":
-        output+=last_code
+        output+=json.dumps(last_code.message)
         output+="\n"
         pass
     else:
