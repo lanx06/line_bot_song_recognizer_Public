@@ -163,6 +163,8 @@ def handle_message(event):
     
 @handler.add(MessageEvent, message=AudioMessage)
 def voice(event):
+    input_type=event.message.type
+    message_id=event.message.id
     output=""
     output+=event.message.id
     output+=event.message.type
