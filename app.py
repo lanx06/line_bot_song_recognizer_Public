@@ -11,6 +11,7 @@ from linebot.models import *
 
 app = Flask(__name__)
 
+
 # Channel Access Token
 line_bot_api = LineBotApi('zC0rCziecO5W7oWBn+i+zjfK4baDrVaWRGHCHrbQ2lvZUsPkDuevOLfw2RJ15lgum9mWZDZznXTZzNt86+woFN5WOWg1wX4XmxaH44JNvzBaSsoBwZaBkKamhJwvfv9qwASRWx+Y82vDYFzV7intkAdB04t89/1O/w1cDnyilFU=')
 # Channel Secret
@@ -101,6 +102,8 @@ def get_yahoo():
 
     return get_data
 # 監聽所有來自 /callback 的 Post Request
+last_code=""
+
 @app.route("/callback", methods=['POST'])
 def callback():
     # get X-Line-Signature header value
@@ -119,6 +122,8 @@ def callback():
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     message = TextSendMessage(text=event.message.text)
+    input_type=event.message.type
+    message_id=event.message.id
     print(event.message.type)
     print(event.message.id)
 
@@ -131,12 +136,31 @@ def handle_message(event):
         for x in data:
             output+=x["name"]+"\n"
         print("ok")
+    elif input_type=="file" or  input_type=="audio" :
+
+
+        message_content = line_bot_api.get_message_content(message_id)
+        with open("input_file.mp3", 'wb') as fd:
+            for chunk in message_content.iter_content():
+                fd.write(chunk)
+        last_code=message_id
+        pass
+        
     else:
         output="A"
         print("ok")
     line_bot_api.reply_message(event.reply_token,TextSendMessage(text=output))
     
-    
+
+
+
+
+
+
+@app.route('/log',methods=['GET'])
+def show_last_code():
+    return str(last_code)
+
 
 
 
