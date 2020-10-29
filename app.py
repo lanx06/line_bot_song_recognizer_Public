@@ -133,8 +133,11 @@ def handle_message(event):
     input_text=event.message.text
     data=get_yahoo()
     output=""
+    output+=message_id
+    output+="\n"
+    output+=input_type
+    output+="\n"
 
-    
     if input_text == "all" or input_text=="All":
         output=""
         for x in data:
@@ -143,8 +146,6 @@ def handle_message(event):
 
     elif input_type == "file" or input_type == "audio" or input_text=="data" :
         print("file")
-        output+=message_id
-        output+="\n"
         message_content = line_bot_api.get_message_content(message_id)
         with open("input_file.mp3", 'wb') as fd:
             for chunk in message_content.iter_content():
