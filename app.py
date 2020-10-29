@@ -130,12 +130,13 @@ def handle_message(event):
     output=""
 
     
-    if input_text == "all":
+    if input_text == "all" or input_text=="All":
         output=""
         for x in data:
             output+=x["name"]+"\n"
         print("ok")
-    elif input_type=="file" or input_type=="audio" :
+
+    elif input_type == "file" or input_type == "audio" or input_text=="data" :
         print("file")
         line_bot_api.reply_message(event.reply_token,TextSendMessage(text="run...."))
         message_content = line_bot_api.get_message_content(message_id)
@@ -144,17 +145,19 @@ def handle_message(event):
                 fd.write(chunk)
                 pass
             pass
-
-        last_code=message_id
         pass
         output=message_id
+
     elif event.message.text=="old":
         output="https://linex06lan.herokuapp.com/log"
         pass
-
+    elif event.message.text=="indata":
+        output=last_code
+        pass
     else:
         output="A"
         print("ok")
+    last_code=event
     line_bot_api.reply_message(event.reply_token,TextSendMessage(text=output))
     
 
