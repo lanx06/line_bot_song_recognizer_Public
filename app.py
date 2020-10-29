@@ -7,7 +7,7 @@ from linebot import (
 from linebot.exceptions import (
     InvalidSignatureError
 )
-from linebot.models import *
+from linebot.models  import *
 import json
 
 app = Flask(__name__)
@@ -125,7 +125,7 @@ def save(indata):
 
 
 # 處理訊息
-@handler.add(MessageEvent, message=TextMessage)
+@handler.add(MessageEvent, message=Message)
 def handle_message(event):
     #message = TextSendMessage(text=event.message.text)
     global last_code
@@ -161,7 +161,8 @@ def handle_message(event):
         output+="\n"
         pass
     elif event.message.text=="indata":
-        output+=json.dumps(last_code.message)
+        save=last_code.message
+        output+=json.dumps(save)
         output+="\n"
         pass
     else:
@@ -170,7 +171,7 @@ def handle_message(event):
     last_code=event
     line_bot_api.reply_message(event.reply_token,TextSendMessage(text=output))
     
-
+@handler.add(MessageEvent, message=TextMessage)
 
 
 
