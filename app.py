@@ -104,6 +104,7 @@ def get_yahoo():
 # 監聽所有來自 /callback 的 Post Request
 last_code=""
 
+
 @app.route("/callback", methods=['POST'])
 def callback():
     # get X-Line-Signature header value
@@ -121,31 +122,36 @@ def callback():
 # 處理訊息
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    message = TextSendMessage(text=event.message.text)
+    #message = TextSendMessage(text=event.message.text)
     input_type=event.message.type
     message_id=event.message.id
-    print(event.message.type)
-    print(event.message.id)
-
+    input_text=event.message.text
     data=get_yahoo()
     output=""
 
     
-    if event.message.text == "all":
+    if input_text == "all":
         output=""
         for x in data:
             output+=x["name"]+"\n"
         print("ok")
-    elif input_type=="file" or  input_type=="audio" :
-
-
+    elif input_type=="file" or input_type=="audio" :
+        print("file")
+        line_bot_api.reply_message(event.reply_token,TextSendMessage(text="run...."))
         message_content = line_bot_api.get_message_content(message_id)
         with open("input_file.mp3", 'wb') as fd:
             for chunk in message_content.iter_content():
                 fd.write(chunk)
+                pass
+            pass
+
         last_code=message_id
         pass
-        
+        output=message_id
+    elif event.message.text=="old":
+        output="https://linex06lan.herokuapp.com/log"
+        pass
+
     else:
         output="A"
         print("ok")
@@ -159,7 +165,7 @@ def handle_message(event):
 
 @app.route('/log',methods=['GET'])
 def show_last_code():
-    return str(last_code)
+    return last_code
 
 
 
