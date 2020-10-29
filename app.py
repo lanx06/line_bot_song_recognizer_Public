@@ -143,7 +143,8 @@ def handle_message(event):
 
     elif input_type == "file" or input_type == "audio" or input_text=="data" :
         print("file")
-        line_bot_api.reply_message(event.reply_token,TextSendMessage(text="run...."))
+        output+=message_id
+        output+="\n"
         message_content = line_bot_api.get_message_content(message_id)
         with open("input_file.mp3", 'wb') as fd:
             for chunk in message_content.iter_content():
@@ -151,19 +152,19 @@ def handle_message(event):
                 pass
             pass
         pass
-        output=message_id
 
     elif event.message.text=="old":
-        output="https://linex06lan.herokuapp.com/log"
+        output+="https://linex06lan.herokuapp.com/log"
+        output+="\n"
         pass
     elif event.message.text=="indata":
-        output=last_code
+        output+=last_code
+        output+="\n"
         pass
     else:
         output="A"
         print("ok")
     last_code=event
-    line_bot_api.reply_message(event.reply_token,TextSendMessage(text=input_type))
     line_bot_api.reply_message(event.reply_token,TextSendMessage(text=output))
     
 
