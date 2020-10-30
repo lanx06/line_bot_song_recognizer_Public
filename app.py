@@ -185,11 +185,10 @@ def voice(event):
     if return_data !=False:
     
         you_id=return_data["metadata"]["music"][0]["external_metadata"]["youtube"]["vid"]
-
         output+="https://www.youtube.com/watch?v="+you_id
         output+="\n"
     else:
-        output+=False
+        output+="False"
     line_bot_api.reply_message(event.reply_token,TextSendMessage(text=output))
 
 
