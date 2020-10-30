@@ -76,7 +76,7 @@ class find_music():
                 data={
                     "song_name":song_name,
                     "url": url,
-                    "artists":find_data[x]["album"]["artist"]
+                    #"artists":find_data[x]["artist"]
                 }
                 return_data.append(data)
                 pass
