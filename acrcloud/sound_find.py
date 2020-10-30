@@ -23,7 +23,7 @@ class find_music():
             'host':self.host,
             'access_key':self.access_key, 
             'access_secret':self.access_secret,
-            'timeout':20 # seconds
+            'timeout':60 # seconds
         }
 
         '''This module can recognize ACRCloud by most of audio/video file. 

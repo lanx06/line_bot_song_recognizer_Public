@@ -166,10 +166,9 @@ def voice(event):
     input_type=event.message.type
     message_id=event.message.id
     output=""
-    output+=event.message.id
-    output+=event.message.type
-    print("file")
-    
+    output+=event.message.id+"\n"
+    output+=event.message.type+"\n"
+
     if input_type == "file" or input_type == "audio" :
         print("file")
         message_content = line_bot_api.get_message_content(message_id)
