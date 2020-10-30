@@ -184,12 +184,13 @@ def voice(event):
         
         print(return_data)
         return_data= gg.find_result(return_data)
-
+        #plwone
         for x in return_data:
             data_plw= return_data[x]
-            
+            #data
             output+=x+":\n"
             for y in data_plw:
+                print(data_plw[y])
                 output+=y+":"+data_plw[y]+"\n"
                 pass
             pass
