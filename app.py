@@ -184,7 +184,7 @@ def voice(event):
     return_data =gg.sound_find("./input_file.mp3")
     if return_data !=False:
     
-        you_id=return_data["metadata"]["music"][0]["external_metadata"]["youtube"]["vid"]
+        you_id=return_data["youtube"]["vid"]
         output+="https://www.youtube.com/watch?v="+you_id
         output+="\n"
     else:
