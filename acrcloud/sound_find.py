@@ -44,3 +44,7 @@ class find_music():
         else:
             return False    
         pass
+if __name__ == '__main__':
+    find=find_music({})
+    data=find.sound_find("./Hiroyuki Sawano aLIEz.mp3")
+    print(data)

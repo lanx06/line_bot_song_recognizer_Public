@@ -9,7 +9,6 @@ from linebot.exceptions import (
 )
 from linebot.models  import *
 import json
-from acrcloud.recognizer import ACRCloudRecognizer
 from acrcloud.sound_find import find_music
 
 app = Flask(__name__)
@@ -189,6 +188,8 @@ def voice(event):
 
         output+="https://www.youtube.com/watch?v="+you_id
         output+="\n"
+    else:
+        output+=False
     line_bot_api.reply_message(event.reply_token,TextSendMessage(text=output))
 
 
