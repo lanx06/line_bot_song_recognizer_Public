@@ -45,7 +45,7 @@ class find_music():
             return False    
         pass
     def find_result(self,find_data):
-        return_data=[]
+        return_data={}
         for x in find_data:
             
             if x=="youtube":
@@ -56,7 +56,7 @@ class find_music():
                     "url": url,
                     "vid":vid
                 }
-                return_data.append(data)
+                return_data[x] = data
 
                 pass
             elif x=="deezer":
@@ -65,7 +65,7 @@ class find_music():
                     "song_id":find_data[x]["track"]["id"],
                     "song_name":find_data[x]["track"]["name"]    
                 }
-                return_data.append(data)
+                return_data[x] = data
                 pass
             elif x=="spotify":
                 album= find_data[x]["album"]["id"]
@@ -78,7 +78,7 @@ class find_music():
                     "url": url,
                     #"artists":find_data[x]["artist"]
                 }
-                return_data.append(data)
+                return_data[x] = data
                 pass
             elif x=="musicbrainz":
                 pass

@@ -188,6 +188,7 @@ def voice(event):
 
         for x in return_data:
             data_plw= return_data[x]
+            
             output+=x+":\n"
             for y in data_plw:
                 output+=y+":"+data_plw[y]+"\n"
