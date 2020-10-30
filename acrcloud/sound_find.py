@@ -61,9 +61,9 @@ class find_music():
                 pass
             elif x=="deezer":
                 data={
-                    "album_id":find_data["album"]["id"],
-                    "song_id":find_data["track"]["id"],
-                    "song_name":find_data["track"]["name"]    
+                    "album_id":find_data[x]["album"]["id"],
+                    "song_id":find_data[x]["track"]["id"],
+                    "song_name":find_data[x]["track"]["name"]    
                 }
                 return_data.append(data)
                 pass
