@@ -190,8 +190,8 @@ def voice(event):
             #data
             output+=x+":\n"
             for y in data_plw:
-                print(data_plw[y])
-                output+=y+":"+data_plw[y]+"\n"
+                #print(data_plw[y])
+                output+=y+":"+str(data_plw[y])+"\n"
                 pass
             pass
             output+="\n"
