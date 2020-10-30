@@ -9,6 +9,8 @@ from linebot.exceptions import (
 )
 from linebot.models  import *
 import json
+from acrcloud.recognizer import ACRCloudRecognizer
+from acrcloud.sound_find import find_music
 
 app = Flask(__name__)
 
@@ -173,12 +175,20 @@ def voice(event):
     if input_type == "file" or input_type == "audio" :
         print("file")
         message_content = line_bot_api.get_message_content(message_id)
-        with open("input_file.mp3", 'wb') as fd:
+        with open("./input_file.mp3", 'wb') as fd:
             for chunk in message_content.iter_content():
                 fd.write(chunk)
                 pass
             pass
         pass
+    gg=find_music({})
+    return_data =gg.sound_find("./input_file.mp3")
+    if return_data !=False:
+    
+        you_id=return_data["metadata"]["music"][0]["external_metadata"]["youtube"]["vid"]
+
+        output+="https://www.youtube.com/watch?v="+you_id
+        output+="\n"
     line_bot_api.reply_message(event.reply_token,TextSendMessage(text=output))
 
 

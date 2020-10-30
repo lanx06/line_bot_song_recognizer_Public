@@ -17,7 +17,6 @@ import hashlib
 import urllib.request
 import urllib.parse
 import datetime
-
 import acrcloud_extr_tool
 
 '''
@@ -268,7 +267,7 @@ class ACRCloudStatusCode:
             res = {'status':{'msg':ACRCloudStatusCode.CODE_MSG[res_code]+':'+msg, 'code':res_code}}
         return json.dumps(res)
 
-
+"""
 if __name__ == '__main__':
     config = {
         'host':'ap-southeast-1.api.acrcloud.com',
@@ -287,3 +286,28 @@ if __name__ == '__main__':
     #print(re.recognize_by_file(sys.argv[1], 10))
     print(re.recognize_by_filebuffer(buf, 10))
     #print re.recognize(buft)
+"""
+access_key_me="bff70b7593486e9cb3c33bf077d35f50"
+access_secret_me="psSTZibBHkToNacyEYly1ZYB5MNx3V4mK8TOnutf"
+host="identify-ap-southeast-1.acrcloud.com"
+file="../Hiroyuki Sawano aLIEz.mp3"
+if __name__ == '__main__':
+    config = {
+        #Replace "xxxxxxxx" below with your project's host, access_key and access_secret.
+        'host':host,
+        'access_key':access_key_me, 
+        'access_secret':access_secret_me,
+        'timeout':10 # seconds
+    }
+
+    '''This module can recognize ACRCloud by most of audio/video file. 
+        Audio: mp3, wav, m4a, flac, aac, amr, ape, ogg ...
+        Video: mp4, mkv, wmv, flv, ts, avi ...'''
+    re = ACRCloudRecognizer(config)
+
+    #recognize by file path, and skip 0 seconds from from the beginning of sys.argv[1].
+    print(re.recognize_by_file(file, 0))
+
+    buf = open(file, 'rb').read()
+    #recognize by file_audio_buffer that read from file path, and skip 0 seconds from from the beginning of sys.argv[1].
+    print(re.recognize_by_filebuffer(buf, 0))
