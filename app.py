@@ -124,7 +124,6 @@ def save(indata):
     global last_code
     last_code=indata
 
-
 # 處理訊息
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
@@ -183,10 +182,18 @@ def voice(event):
     gg=find_music({})
     return_data =gg.sound_find("./input_file.mp3")
     if return_data !=False:
+        
         print(return_data)
-        you_id=return_data["youtube"]["vid"]
-        output+="https://www.youtube.com/watch?v="+you_id
-        output+="\n"
+        return_data= gg.find_result(return_data)
+
+        for x in return_data:
+            data_plw= return_data[x]
+            output+=x+":\n"
+            for y in data_plw:
+                output+=y+":"+data_plw[y]+"\n"
+                pass
+            pass
+            output+="\n"
     else:
         output+="False"
     line_bot_api.reply_message(event.reply_token,TextSendMessage(text=output))

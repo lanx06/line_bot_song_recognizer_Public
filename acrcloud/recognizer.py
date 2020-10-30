@@ -17,6 +17,7 @@ import hashlib
 import urllib.request
 import urllib.parse
 import datetime
+#current use for luenx window need use .pyd
 import acrcloud_extr_tool
 #import acrcloud_extr_tool
 

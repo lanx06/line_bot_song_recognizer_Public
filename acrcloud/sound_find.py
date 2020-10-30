@@ -44,6 +44,50 @@ class find_music():
         else:
             return False    
         pass
+    def find_result(self,find_data):
+        return_data=[]
+        for x in find_data:
+            
+            if x=="youtube":
+                vid= find_data[x]["vid"]
+
+                url="https://www.youtube.com/watch?v="+vid
+                data={
+                    "url": url,
+                    "vid":vid
+                }
+                return_data.append(data)
+
+                pass
+            elif x=="deezer":
+                data={
+                    "album_id":find_data["album"]["id"],
+                    "song_id":find_data["track"]["id"],
+                    "song_name":find_data["track"]["name"]    
+                }
+                return_data.append(data)
+                pass
+            elif x=="spotify":
+                album= find_data[x]["album"]["id"]
+                track=find_data[x]["track"]["id"]
+                song_name=find_data[x]["track"]["name"]
+
+                url="https://open.spotify.com/album/"+album+"?highlight=spotify:track:"+track
+                data={
+                    "song_name":song_name,
+                    "url": url,
+                    "artists":find_data[x]["artist"]
+                }
+                return_data.append(data)
+                pass
+            elif x=="musicbrainz":
+                pass
+            else:
+                pass
+        return return_data
+
+
+
 if __name__ == '__main__':
     find=find_music({})
     data=find.sound_find("./Hiroyuki Sawano aLIEz.mp3")
