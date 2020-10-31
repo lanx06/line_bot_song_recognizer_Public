@@ -86,16 +86,35 @@ class find_music():
 
                 pass
             elif x=="deezer":
-                data={
-                    "song_id":currnt_data["track"]["id"],
-                    "song_name":currnt_data["track"]["name"], 
-                    #"album_id":album_id
-
-                }
-                album= error_json(currnt_data,"album")
-                if len(album)!=0:
-                    data["album_id"]=error_json_value(album,"id")
+                album= error_json_value(currnt_data,"album")
+                if album!=None:
+                    album_data=error_json(album,"id","name")
                     pass
+                for y in album_data:
+                    if y=="id":
+                        data["album_id"]=album_data[y]
+                        pass
+                    elif y=="name":
+                        data["album_name"]=album_data[y]
+                        pass
+                    else:
+                        data[y]=album_data[y]
+                        pass
+                track= error_json_value(currnt_data,"track")
+                if track!=None:
+                    track_data=error_json(track,"id","name")
+                    pass
+                for y in track_data:
+                    if y=="id":
+                        data["song_id"]=track_data[y]
+                        pass
+                    elif y=="name":
+                        data["song_name"]=track_data[y]
+                        pass
+                    else:
+                        data[y]=track_data[y]
+                        pass
+                    
                 #album_id= currnt_data["album"]["id"]  
                 
                 pass
@@ -111,9 +130,19 @@ class find_music():
                     track_data=error_json(track,"id","name")
                     pass
                 for y in album_data:
-                    data[y]=album_data[y]
+                    if y=="id":
+                        data["album_id"]=album_data[y]
+                        pass
+                    else:
+                        data[y]=album_data[y]
+                        pass
                 for y in track_data:
-                    data[y]=track_data[y]
+                    if y=="id":
+                        data["song_id"]=track_data[y]
+                        pass
+                    else:
+                        data[y]=track_data[y]
+                        pass
                 if error_json_value(album_data,"id")!= None and error_json_value(track_data,"id"):
                     url="https://open.spotify.com/album/"+error_json_value(album_data,"id")+"?highlight=spotify:track:"+error_json_value(track_data,"id")
                     data["url"]=url    
