@@ -9,11 +9,22 @@ def error_json(insjson,*keys):
     output={}
     for key in keys :
         try:
-            get_data= output[key]
+            get_data= insjson[key]
             output[key]=get_data
             pass
         except (KeyError,IndentationError):
             pass
+    return output
+def error_json_value(insjson,key):
+    output={}
+    
+    try:
+        get_data= insjson[key]
+        output=get_data
+        pass
+    except (KeyError,IndentationError):
+        return None
+        
     return output
 class find_music():
     def __init__(self,setting):
@@ -21,6 +32,7 @@ class find_music():
             self.access_key=setting["access_key"]
             self.access_secret=setting["access_secret"]
             self.host=setting["host"]
+
         else:
             self.access_key=access_key_me
             self.access_secret=access_secret_me
@@ -55,72 +67,72 @@ class find_music():
             return False    
         pass
 
-    def error_json(self,insjson,*keys):
-        output={}
-        for key in keys :
-            try:
-                get_data= output[key]
-                output[key]=get_data
-                pass
-            except (KeyError,IndentationError):
-                pass
-        return output
 
     def find_result(self,find_data):
         return_data={}
         for x in find_data:
             currnt_data=find_data[x]
             data={}
-            try:
+            #try:
 
-                if x=="youtube":
-                    vid= currnt_data["vid"]
+            if x=="youtube":
+                vid= currnt_data["vid"]
 
-                    url="https://www.youtube.com/watch?v="+vid
-                    data={
-                        "url": url,
-                        "vid":vid
-                    }
-                    return_data[x] = data
+                url="https://www.youtube.com/watch?v="+vid
+                data={
+                    "url": url,
+                    "vid":vid
+                }
 
-                    pass
-                elif x=="deezer":
-                    data={
-                        "song_id":currnt_data["track"]["id"],
-                        "song_name":currnt_data["track"]["name"], 
-                        #"album_id":album_id
-
-                    }
-                    album= error_json(currnt_data,"album")
-                    if len(album)!=0:
-                        data["id"]=album["id"]
-                        pass
-                    #album_id= currnt_data["album"]["id"]  
-                    
-                    return_data[x] = data
-                    pass
-                elif x=="spotify":
-                    album= currnt_data["album"]["id"]
-                    track=currnt_data["track"]["id"]
-                    song_name=currnt_data["track"]["name"]
-
-                    url="https://open.spotify.com/album/"+album+"?highlight=spotify:track:"+track
-                    data={
-                        "song_name":song_name,
-                        "url": url,
-                        #"artists":currnt_data["artist"]
-                    }
-                    return_data[x] = data
-                    pass
-                elif x=="musicbrainz":
-                    pass
-                else:
-                    pass
                 pass
+            elif x=="deezer":
+                data={
+                    "song_id":currnt_data["track"]["id"],
+                    "song_name":currnt_data["track"]["name"], 
+                    #"album_id":album_id
+
+                }
+                album= error_json(currnt_data,"album")
+                if len(album)!=0:
+                    data["album_id"]=error_json_value(album,"id")
+                    pass
+                #album_id= currnt_data["album"]["id"]  
+                
+                pass
+            elif x=="spotify":
+                album_data={}
+                album= error_json_value(currnt_data,"album")
+                if album!= None:
+                    album_data=error_json(album,"id","name")
+                    pass
+                track_data={}
+                track= error_json_value(currnt_data,"track")
+                if track!= None:
+                    track_data=error_json(track,"id","name")
+                    pass
+                for y in album_data:
+                    data[y]=album_data[y]
+                for y in track_data:
+                    data[y]=track_data[y]
+                if error_json_value(album_data,"id")!= None and error_json_value(track_data,"id"):
+                    url="https://open.spotify.com/album/"+error_json_value(album_data,"id")+"?highlight=spotify:track:"+error_json_value(track_data,"id")
+                    data["url"]=url    
+                    pass
+                
+                pass
+            elif x=="musicbrainz":
+                pass
+            else:
+                pass
+            pass
+            return_data[x]=data
+            """  
             except :
                 return_data[x]=data
                 print("error")
                 pass
+
+            """
         return return_data
 
 
