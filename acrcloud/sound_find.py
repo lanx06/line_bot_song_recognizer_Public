@@ -5,6 +5,16 @@ host="identify-ap-southeast-1.acrcloud.com"
 import os, sys
 from acrcloud.recognizer import ACRCloudRecognizer
 import json
+def error_json(insjson,*keys):
+    output={}
+    for key in keys :
+        try:
+            get_data= output[key]
+            output[key]=get_data
+            pass
+        except (KeyError,IndentationError):
+            pass
+    return output
 class find_music():
     def __init__(self,setting):
         if len(setting)!=0:
@@ -44,15 +54,27 @@ class find_music():
         else:
             return False    
         pass
+
+    def error_json(self,insjson,*keys):
+        output={}
+        for key in keys :
+            try:
+                get_data= output[key]
+                output[key]=get_data
+                pass
+            except (KeyError,IndentationError):
+                pass
+        return output
+
     def find_result(self,find_data):
         return_data={}
         for x in find_data:
-
+            currnt_data=find_data[x]
             data={}
             try:
 
                 if x=="youtube":
-                    vid= find_data[x]["vid"]
+                    vid= currnt_data["vid"]
 
                     url="https://www.youtube.com/watch?v="+vid
                     data={
@@ -63,26 +85,30 @@ class find_music():
 
                     pass
                 elif x=="deezer":
-                    
-                    #album_id= find_data[x]["album"]["id"]  
                     data={
-                        "song_id":find_data[x]["track"]["id"],
-                        "song_name":find_data[x]["track"]["name"], 
+                        "song_id":currnt_data["track"]["id"],
+                        "song_name":currnt_data["track"]["name"], 
                         #"album_id":album_id
 
                     }
+                    album= error_json(currnt_data,"album")
+                    if len(album)!=0:
+                        data["id"]=album["id"]
+                        pass
+                    #album_id= currnt_data["album"]["id"]  
+                    
                     return_data[x] = data
                     pass
                 elif x=="spotify":
-                    album= find_data[x]["album"]["id"]
-                    track=find_data[x]["track"]["id"]
-                    song_name=find_data[x]["track"]["name"]
+                    album= currnt_data["album"]["id"]
+                    track=currnt_data["track"]["id"]
+                    song_name=currnt_data["track"]["name"]
 
                     url="https://open.spotify.com/album/"+album+"?highlight=spotify:track:"+track
                     data={
                         "song_name":song_name,
                         "url": url,
-                        #"artists":find_data[x]["artist"]
+                        #"artists":currnt_data["artist"]
                     }
                     return_data[x] = data
                     pass
