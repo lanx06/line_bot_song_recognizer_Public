@@ -91,4 +91,6 @@ class find_music():
 if __name__ == '__main__':
     find=find_music({})
     data=find.sound_find("./Hiroyuki Sawano aLIEz.mp3")
-    print(data["youtube"])
+    result=find.find_result(data)
+
+    print(json.dumps(result))

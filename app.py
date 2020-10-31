@@ -182,7 +182,7 @@ def voice(event):
     return_data =gg.sound_find("./input_file.mp3")
     if return_data !=False:
         
-        print(return_data)
+        print(json.dumps(return_data))
         return_data= gg.find_result(return_data)
         #plwone
         for x in return_data:
