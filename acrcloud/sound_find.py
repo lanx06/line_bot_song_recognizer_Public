@@ -63,10 +63,12 @@ class find_music():
 
                     pass
                 elif x=="deezer":
+                    
+                    #album_id= find_data[x]["album"]["id"]  
                     data={
                         "song_id":find_data[x]["track"]["id"],
                         "song_name":find_data[x]["track"]["name"], 
-                        "album_id":find_data[x]["album"]["id"]
+                        #"album_id":album_id
 
                     }
                     return_data[x] = data
