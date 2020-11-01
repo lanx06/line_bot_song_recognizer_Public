@@ -1,26 +1,30 @@
 # line bot sound or song recognizer
-## can get youtube and spotify and deezer ....
-![](https://i.imgur.com/iNRkyYY.jpg =200x)
+
+
+
+## will find in  youtube and spotify and deezer ....
+<img src="https://i.imgur.com/iNRkyYY.jpg" width="200"/> 
+
 
 
 ## reference
-line bot  https://blackmaple.me/line-bot-tutorial/
+line bot  https://blackmaple.me/line-bot-tutorial/ 
 acrcloud  https://github.com/acrcloud/acrcloud_sdk_python
 ## require
 line 
 acrcloud
-heroku
+maybe heroku ?
 ## code 
-app.py
 line
+app.py
 ```python=
 # Channel Access Token
 line_bot_api = LineBotApi('')
 # Channel Secret
 handler = WebhookHandler('')
 ```
-sound_find.py
 acrcloud
+sound_find.py
 ```python=
 access_key_me=""
 access_secret_me=""
