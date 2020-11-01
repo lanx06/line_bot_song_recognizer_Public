@@ -8,7 +8,7 @@
 
 
 ## reference
-line bot  https://blackmaple.me/line-bot-tutorial/ 
+line bot  https://blackmaple.me/line-bot-tutorial/<br>
 acrcloud  https://github.com/acrcloud/acrcloud_sdk_python
 ## require
 line 
@@ -18,8 +18,11 @@ maybe heroku ?
 
 app.py
 ```python=
+#line
 line_key="<<<you>>>"
 line_key_secret="<<<you>>>"
+
+#acrcloud
 accloud_key="<<<you>>>"
 accloud_key_secret="<<<you>>>"
 host="identify-ap-southeast-1.acrcloud.com"
