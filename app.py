@@ -14,96 +14,18 @@ from acrcloud.sound_find import find_music
 app = Flask(__name__)
 
 
+#need
+line_key="<<<you>>>"
+line_key_secret="<<<you>>>"
+accloud_key="<<<you>>>"
+accloud_key_secret="<<<you>>>"
+host="identify-ap-southeast-1.acrcloud.com"
+
 # Channel Access Token
-line_bot_api = LineBotApi('zC0rCziecO5W7oWBn+i+zjfK4baDrVaWRGHCHrbQ2lvZUsPkDuevOLfw2RJ15lgum9mWZDZznXTZzNt86+woFN5WOWg1wX4XmxaH44JNvzBaSsoBwZaBkKamhJwvfv9qwASRWx+Y82vDYFzV7intkAdB04t89/1O/w1cDnyilFU=')
+line_bot_api = LineBotApi(line_key)
 # Channel Secret
-handler = WebhookHandler('e249894d19ef1c6763c99fdf6bffbf6b')
+handler = WebhookHandler(line_key_secret)
 
-def get_yahoo():
-
-    get_data=[]
-    url = "https://movies.yahoo.com.tw/movie_thisweek.html?page=1"
-    r = requests.get(url)
-    r.encoding="utf-8"
-    html=BeautifulSoup(r.text,"html.parser")
-    #data=json.loads(r.text)
-
-    image_url_arr=[]
-    items =html.find_all("div","release_info")
-    image_arr=html.find_all("div","release_foto")
-    #print(items)
-    x=0
-
-    for it in items:
-        image_it=image_arr[x]
-        name=it.find("div","release_movie_name").a.text.strip()
-        en=it.find("div","en").a.text.strip()
-        time=it.find("div","release_movie_time").text.strip()
-        text=it.find("div","release_text").span.text.strip()
-        image=image_it.find("img")["src"]
-        image_url_arr.append(image)
-        image_request = requests.get(image)
-        f = open("./"+str(x)+'.png','wb')
-        
-        f.write(image_request.content)
-        f.close()
-        pass
-
-        #print(image)
-        hap="期待度:"+it.find("div","leveltext").span.text.strip()
-        data={
-        "name":name,
-        "en":en,
-        "time":time,
-        "image":"./"+str(x)+'.png',
-        "text":text,
-        "hope":hap
-
-        }
-        get_data.append(data)
-
-        x=x+1
-
-    url = "https://movies.yahoo.com.tw/movie_thisweek.html?page=2"
-    r = requests.get(url)
-    r.encoding="utf-8"
-    html=BeautifulSoup(r.text,"html.parser")
-    items =html.find_all("div","release_info")
-    image_arr=html.find_all("div","release_foto")
-
-
-    for it in items:
-
-        image_it=image_arr[x-10]
-        name=it.find("div","release_movie_name").a.text.strip()
-        en=it.find("div","en").a.text.strip()
-        time=it.find("div","release_movie_time").text.strip()
-        text=it.find("div","release_text").span.text.strip()
-        image=image_it.find("img")["src"]
-        image_url_arr.append(image)
-        image_request = requests.get(image)
-        f = open("./"+str(x)+'.png','wb')
-
-        f.write(image_request.content)
-        f.close()
-        #print(image)
-        hap="期待度"+it.find("div","leveltext").span.text.strip()
-
-        data={
-        "name":name,
-        "en":en,
-        "time":time,
-        "image":"./"+str(x)+'.png',
-        "text":text,
-        "hope":hap
-
-        }
-        get_data.append(data)
-        x=x+1
-        pass
-
-    return get_data
-# 監聽所有來自 /callback 的 Post Request
 
 
 @app.route("/callback", methods=['POST'])
@@ -120,9 +42,6 @@ def callback():
         abort(400)
     return 'OK'
 last_code=""
-def save(indata):
-    global last_code
-    last_code=indata
 
 # 處理訊息
 @handler.add(MessageEvent, message=TextMessage)
@@ -132,24 +51,15 @@ def handle_message(event):
     input_type=event.message.type
     message_id=event.message.id
     input_text=event.message.text
-    data=get_yahoo()
     output=""
-    output+=message_id
-    output+="\n"
     output+=input_type
     output+="\n"
     print(event.message)
 
-    if input_text == "all" or input_text=="All":
-        output=""
-        for x in data:
-            output+=x["name"]+"\n"
+    if input_text == "help" or input_text=="Help":
+        output+="https://github.com/lanx06/line_bot_song_recognizer_Public"
         print("ok")
 
-    elif event.message.text=="old":
-        output+="https://linex06lan.herokuapp.com/log"
-        output+="\n"
-        pass
     else:
         output="A"
         print("ok")
@@ -193,20 +103,6 @@ def voice(event):
     else:
         output+="False"
     line_bot_api.reply_message(event.reply_token,TextSendMessage(text=output))
-
-@app.route("/log", methods=['GET'])
-def log():
-   
-    return "test"
-
-
-
-
-@app.route('/log',methods=['GET'])
-def show_last_code():
-    return last_code
-
-
 
 
 import os

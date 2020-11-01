@@ -1,7 +1,5 @@
 
-access_key_me="bff70b7593486e9cb3c33bf077d35f50"
-access_secret_me="psSTZibBHkToNacyEYly1ZYB5MNx3V4mK8TOnutf"
-host="identify-ap-southeast-1.acrcloud.com"
+
 import os, sys
 from acrcloud.recognizer import ACRCloudRecognizer
 import json
@@ -32,11 +30,6 @@ class find_music():
             self.access_key=setting["access_key"]
             self.access_secret=setting["access_secret"]
             self.host=setting["host"]
-
-        else:
-            self.access_key=access_key_me
-            self.access_secret=access_secret_me
-            self.host=host
         pass
     def sound_find(self,file_path):
         file=file_path
