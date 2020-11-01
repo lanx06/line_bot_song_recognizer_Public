@@ -150,11 +150,6 @@ def handle_message(event):
         output+="https://linex06lan.herokuapp.com/log"
         output+="\n"
         pass
-    elif event.message.text=="indata":
-        save=last_code.message
-        output+=json.dumps(save)
-        output+="\n"
-        pass
     else:
         output="A"
         print("ok")
@@ -199,7 +194,10 @@ def voice(event):
         output+="False"
     line_bot_api.reply_message(event.reply_token,TextSendMessage(text=output))
 
-
+@app.route("/log", methods=['GET'])
+def log():
+   
+    return "test"
 
 
 
