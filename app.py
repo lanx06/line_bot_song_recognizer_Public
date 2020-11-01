@@ -166,8 +166,8 @@ def voice(event):
     input_type=event.message.type
     message_id=event.message.id
     output=""
-    output+=event.message.id+"\n"
-    output+=event.message.type+"\n"
+    #output+=event.message.id+"\n"
+    output+=event.message.type+"\n\n"
 
     if input_type == "file" or input_type == "audio" :
         print("file")
