@@ -15,18 +15,13 @@ line
 acrcloud
 maybe heroku ?
 ## code 
-line
+
 app.py
 ```python=
-# Channel Access Token
-line_bot_api = LineBotApi('')
-# Channel Secret
-handler = WebhookHandler('')
-```
-acrcloud
-sound_find.py
-```python=
-access_key_me=""
-access_secret_me=""
+line_key="<<<you>>>"
+line_key_secret="<<<you>>>"
+accloud_key="<<<you>>>"
+accloud_key_secret="<<<you>>>"
 host="identify-ap-southeast-1.acrcloud.com"
 ```
+
