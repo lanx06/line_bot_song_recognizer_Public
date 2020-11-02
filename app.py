@@ -17,8 +17,8 @@ app = Flask(__name__)
 #need
 line_key="<<<you>>>"
 line_key_secret="<<<you>>>"
-accloud_key="<<<you>>>"
-accloud_key_secret="<<<you>>>"
+acrcloud_key="<<<you>>>"
+acrcloud_key_secret="<<<you>>>"
 host="identify-ap-southeast-1.acrcloud.com"
 
 # Channel Access Token
@@ -83,7 +83,11 @@ def voice(event):
                 pass
             pass
         pass
-    gg=find_music({})
+    setting={
+        "access_key":acrcloud_key,
+        "access_secret":acrcloud_key_secret
+    }
+    gg=find_music(setting)
     return_data =gg.sound_find("./input_file.mp3")
     if return_data !=False:
         
